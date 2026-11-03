@@ -1,2 +1,2 @@
 # DiaRisk-AI
-Clinical Diabetes Risk Assessment System
+ Diabetes Risk Assessment System
