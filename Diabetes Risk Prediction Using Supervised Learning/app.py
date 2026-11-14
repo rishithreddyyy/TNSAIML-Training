@@ -854,6 +854,14 @@ with tabs[3]:
             scatter_df = raw_df.copy()
             scatter_df["Diagnosis"] = scatter_df["Outcome"].map({0: "Non-Diabetic", 1: "Diabetic"})
 
+            # Check if statsmodels is installed for OLS trendlines; fall back cleanly if not
+            has_statsmodels = False
+            try:
+                import statsmodels.api
+                has_statsmodels = True
+            except ImportError:
+                has_statsmodels = False
+
             fig_scatter = px.scatter(
                 scatter_df,
                 x=feat_x,
@@ -862,7 +870,7 @@ with tabs[3]:
                 color_discrete_map={"Non-Diabetic": "#10b981", "Diabetic": "#ef4444"},
                 opacity=0.75,
                 hover_data=["Age", "Glucose", "BMI"],
-                trendline="ols"
+                trendline="ols" if has_statsmodels else None
             )
             fig_scatter.update_layout(
                 paper_bgcolor='rgba(0,0,0,0)',
